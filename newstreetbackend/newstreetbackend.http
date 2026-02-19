@@ -1,0 +1,6 @@
+@newstreetbackend_HostAddress = http://localhost:5117
+
+GET {{newstreetbackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
