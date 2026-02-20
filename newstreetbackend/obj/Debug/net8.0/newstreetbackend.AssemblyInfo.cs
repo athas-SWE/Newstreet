@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("newstreetbackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2628fada5a5f47d8254ef93d6579ea16451d6121")]
 [assembly: System.Reflection.AssemblyProductAttribute("newstreetbackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("newstreetbackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

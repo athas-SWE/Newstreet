@@ -1,5 +1,9 @@
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\appsettings.json
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\frontend\package-lock.json
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\frontend\package.json
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\frontend\public\manifest.json
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\frontend\tsconfig.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\newstreetbackend.staticwebassets.endpoints.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\newstreetbackend.exe
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\bin\Debug\net8.0\newstreetbackend.deps.json
@@ -105,6 +109,7 @@ C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreet
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.csproj.CoreCompileInputs.cache
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.sourcelink.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\rjimswa.dswa.cache.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
@@ -113,10 +118,10 @@ C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticweb
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstree.F49F7289.Up2Date
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.dll
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\refint\newstreetbackend.dll
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.pdb
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\newstreetbackend.genruntimeconfig.cache
 C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\ref\newstreetbackend.dll
-C:\Users\Athas AR\Desktop\streetmain\newstreetbackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
