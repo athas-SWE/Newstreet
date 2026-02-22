@@ -121,7 +121,7 @@ export class UserManagementComponent implements OnInit {
   changeRole(userId: string, event: Event): void {
     const target = event.target as HTMLSelectElement;
     const newRole = target.value;
-    this.adminService.updateUserRole(userId, newRole).subscribe({
+    this.adminService.updateUser(userId, newRole).subscribe({
       next: () => {
         this.loadUsers();
       },

@@ -29,8 +29,8 @@ export class AdminService {
     return this.apiService.get<any>(`admin/users?page=${page}&pageSize=${pageSize}${roleParam}`);
   }
 
-  updateUserRole(userId: string, role: string): Observable<void> {
-    return this.apiService.put<void>(`admin/users/${userId}/role`, { role });
+  updateUser(userId: string, role: string): Observable<void> {
+    return this.apiService.put<void>(`admin/users/${userId}`, { role });
   }
 
   deleteUser(userId: string): Observable<void> {
