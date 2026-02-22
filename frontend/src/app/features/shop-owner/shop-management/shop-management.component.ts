@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { Shop } from '../../../core/models/shop.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
+import { LocationPickerComponent } from '../../../shared/components/location-picker/location-picker.component';
 
 @Component({
   selector: 'app-shop-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent, LocationPickerComponent],
   template: `
     <div class="shop-management-container">
       <div class="container">
@@ -43,6 +44,15 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                 <input type="checkbox" [(ngModel)]="shopData.isDeliveryAvailable" name="delivery" />
                 Delivery Available
               </label>
+            </div>
+            <div class="form-group">
+              <label>Shop Location</label>
+              <p class="location-description">Update your shop's location on the map</p>
+              <app-location-picker
+                [initialLatitude]="shopData.latitude"
+                [initialLongitude]="shopData.longitude"
+                (locationSelected)="onLocationSelected($event)"
+              ></app-location-picker>
             </div>
             @if (error()) {
               <div class="error-message">{{ error() }}</div>
@@ -94,6 +104,11 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
     textarea.form-input {
       min-height: 100px;
       resize: vertical;
+    }
+    .location-description {
+      color: #666;
+      font-size: 0.9rem;
+      margin: 0 0 0.5rem;
     }
     .error-message {
       color: #e74c3c;
@@ -154,6 +169,11 @@ export class ShopManagementComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  onLocationSelected(location: { lat: number; lng: number }): void {
+    this.shopData.latitude = location.lat;
+    this.shopData.longitude = location.lng;
   }
 
   onSubmit(): void {

@@ -16,6 +16,14 @@ export class AdminService {
     return this.apiService.get<any>('admin/statistics');
   }
 
+  getShops(citySlug?: string, status?: string, isVerified?: boolean, page: number = 1, pageSize: number = 20): Observable<any> {
+    let url = `admin/shops?page=${page}&pageSize=${pageSize}`;
+    if (citySlug) url += `&citySlug=${citySlug}`;
+    if (status) url += `&status=${status}`;
+    if (isVerified !== undefined) url += `&isVerified=${isVerified}`;
+    return this.apiService.get<any>(url);
+  }
+
   getPendingShops(page: number = 1, pageSize: number = 20): Observable<any> {
     return this.apiService.get<any>(`admin/shops/pending?page=${page}&pageSize=${pageSize}`);
   }

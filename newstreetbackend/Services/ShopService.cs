@@ -41,6 +41,8 @@ public class ShopService : IShopService
             Address = shop.Address,
             Phone = shop.Phone,
             WhatsApp = shop.WhatsApp,
+            Latitude = shop.Latitude,
+            Longitude = shop.Longitude,
             IsVerified = shop.IsVerified,
             IsDeliveryAvailable = shop.IsDeliveryAvailable,
             Status = shop.Status,

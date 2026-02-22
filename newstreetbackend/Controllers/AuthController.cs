@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using newstreetbackend.Data;
 using newstreetbackend.Model;
 using newstreetbackend.Services;
 
@@ -40,12 +41,22 @@ public class AuthController : ControllerBase
             return BadRequest("Email and password are required");
         }
 
-        var response = await _authService.RegisterAsync(request);
-        if (response == null)
+        // Get city ID from tenant middleware
+        var cityId = TenantMiddleware.GetCityId(HttpContext);
+        
+        try
         {
-            return BadRequest("Email already exists");
-        }
+            var response = await _authService.RegisterAsync(request, cityId);
+            if (response == null)
+            {
+                return BadRequest("Email already exists");
+            }
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

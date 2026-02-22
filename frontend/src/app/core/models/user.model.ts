@@ -21,4 +21,10 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role: string;
+  shopName?: string;
+  address?: string;
+  phone?: string;
+  whatsApp?: string;
+  latitude?: number;
+  longitude?: number;
 }

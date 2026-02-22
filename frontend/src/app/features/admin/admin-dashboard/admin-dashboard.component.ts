@@ -36,7 +36,8 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
           <div class="quick-actions">
             <h2>Quick Actions</h2>
             <div class="action-buttons">
-              <a routerLink="/admin/shops" class="action-button">Verify Shops</a>
+              <a routerLink="/admin/shops" class="action-button">Manage Shops</a>
+              <a routerLink="/admin/shops/pending" class="action-button">Pending Shops</a>
               <a routerLink="/admin/users" class="action-button">Manage Users</a>
               <a routerLink="/admin/cities" class="action-button">Manage Cities</a>
             </div>

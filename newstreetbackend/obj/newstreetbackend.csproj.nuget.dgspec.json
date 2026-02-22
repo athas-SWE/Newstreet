@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Athas AR\\Desktop\\streetmain\\newstreetbackend\\newstreetbackend.csproj": {}
+    "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Athas AR\\Desktop\\streetmain\\newstreetbackend\\newstreetbackend.csproj": {
+    "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Athas AR\\Desktop\\streetmain\\newstreetbackend\\newstreetbackend.csproj",
+        "projectUniqueName": "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
         "projectName": "newstreetbackend",
-        "projectPath": "C:\\Users\\Athas AR\\Desktop\\streetmain\\newstreetbackend\\newstreetbackend.csproj",
+        "projectPath": "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
         "packagesPath": "C:\\Users\\Athas AR\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Athas AR\\Desktop\\streetmain\\newstreetbackend\\obj\\",
+        "outputPath": "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

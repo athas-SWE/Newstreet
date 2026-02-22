@@ -115,8 +115,14 @@ namespace newstreetbackend.Migrations
                     b.Property<bool>("IsVerified")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("double");
+
                     b.Property<string>("LogoUrl")
                         .HasColumnType("longtext");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("double");
 
                     b.Property<string>("Name")
                         .IsRequired()

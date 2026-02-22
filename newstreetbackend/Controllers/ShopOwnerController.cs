@@ -54,6 +54,8 @@ public class ShopOwnerController : ControllerBase
             Address = shop.Address,
             Phone = shop.Phone,
             WhatsApp = shop.WhatsApp,
+            Latitude = shop.Latitude,
+            Longitude = shop.Longitude,
             IsVerified = shop.IsVerified,
             IsDeliveryAvailable = shop.IsDeliveryAvailable,
             Status = shop.Status
@@ -85,6 +87,8 @@ public class ShopOwnerController : ControllerBase
         shop.Phone = shopDto.Phone;
         shop.WhatsApp = shopDto.WhatsApp;
         shop.LogoUrl = shopDto.LogoUrl;
+        shop.Latitude = shopDto.Latitude;
+        shop.Longitude = shopDto.Longitude;
         shop.IsDeliveryAvailable = shopDto.IsDeliveryAvailable;
 
         await _shopRepository.UpdateShopAsync(shop);

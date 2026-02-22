@@ -11,7 +11,8 @@ import { AuthService } from '../../../core/services/auth.service';
   template: `
     <div class="login-container">
       <div class="login-card">
-        <h1>Login</h1>
+        <h1>Shop Owner Login</h1>
+        <p class="login-note">For Shop Owners Only</p>
         <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
           <div class="form-group">
             <label for="email">Email</label>
@@ -43,7 +44,7 @@ import { AuthService } from '../../../core/services/auth.service';
           </button>
         </form>
         <p class="register-link">
-          Don't have an account? <a routerLink="/register">Register</a>
+          Don't have an account? <a routerLink="/shop-owner/register">Register Your Shop</a>
         </p>
       </div>
     </div>
@@ -119,6 +120,12 @@ import { AuthService } from '../../../core/services/auth.service';
       margin-top: 1.5rem;
       color: #666;
     }
+    .login-note {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+      margin: -1rem 0 1.5rem;
+    }
     .register-link a {
       color: #3498db;
       text-decoration: none;
@@ -146,8 +153,14 @@ export class LoginComponent {
     this.error.set('');
 
     this.authService.login({ email: this.email, password: this.password })
-      .then(() => {
-        this.router.navigate(['/']);
+      .then((response) => {
+        if (response.role === 'ShopOwner') {
+          this.router.navigate(['/shop-owner/dashboard']);
+        } else if (response.role === 'Admin') {
+          this.router.navigate(['/admin/dashboard']);
+        } else {
+          this.router.navigate(['/']);
+        }
       })
       .catch((err) => {
         this.error.set('Invalid email or password');

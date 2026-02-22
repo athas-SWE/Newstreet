@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|c:\\users\\athas ar\\source\\repos\\newstreet\\newstreetbackend\\migrations\\20260219132930_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|solutionrelative:migrations\\20260219132930_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|c:\\users\\athas ar\\source\\repos\\newstreet\\newstreetbackend\\migrations\\20260222061421_addlocationshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|solutionrelative:migrations\\20260222061421_addlocationshop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|c:\\users\\athas ar\\source\\repos\\newstreet\\newstreetbackend\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{5C9E2981-ECE3-45E6-8CDB-3C6289368E1F}|newstreetbackend.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -21,11 +29,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260219132930_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260219132930_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
+              "RelativeToolTip": "Migrations\\20260219132930_InitialCreate.cs",
+              "ViewState": "AgIAALwAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-22T06:16:43.15Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -64,21 +85,38 @@
               "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "20260222061421_AddLocationShop.cs",
+              "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260222061421_AddLocationShop.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260222061421_AddLocationShop.cs",
+              "ToolTip": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260222061421_AddLocationShop.cs",
+              "RelativeToolTip": "Migrations\\20260222061421_AddLocationShop.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-22T06:15:18.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\.gitignore",
               "RelativeDocumentMoniker": ".gitignore",
               "ToolTip": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\.gitignore",
               "RelativeToolTip": ".gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAgAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
               "WhenOpened": "2026-02-20T17:14:17.362Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\Athas AR\\Desktop\\streetmain\\.gitignore",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Desktop\\streetmain\\.gitignore",
@@ -90,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\appsettings.Development.json",
               "RelativeDocumentMoniker": "appsettings.Development.json",
@@ -99,10 +137,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-02-19T13:11:10.963Z"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             }
           ]
         }

@@ -9,6 +9,8 @@ public class ShopDto
     public string Address { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
     public string? WhatsApp { get; set; }
+    public double? Latitude { get; set; }
+    public double? Longitude { get; set; }
     public bool IsVerified { get; set; }
     public bool IsDeliveryAvailable { get; set; }
     public string Status { get; set; } = string.Empty;

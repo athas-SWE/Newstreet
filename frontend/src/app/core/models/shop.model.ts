@@ -6,6 +6,8 @@ export interface Shop {
   address: string;
   phone: string;
   whatsApp?: string;
+  latitude?: number;
+  longitude?: number;
   isVerified: boolean;
   isDeliveryAvailable: boolean;
   status: string;

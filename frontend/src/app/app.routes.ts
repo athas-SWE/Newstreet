@@ -34,18 +34,24 @@ export const routes: Routes = [
       },
       {
         path: 'shop-owner',
-        canActivate: [roleGuard(['ShopOwner', 'Admin'])],
         children: [
           {
+            path: 'register',
+            loadComponent: () => import('./features/shop-owner/register/register.component').then(m => m.ShopOwnerRegisterComponent)
+          },
+          {
             path: 'dashboard',
+            canActivate: [roleGuard(['ShopOwner'])],
             loadComponent: () => import('./features/shop-owner/dashboard/dashboard.component').then(m => m.DashboardComponent)
           },
           {
             path: 'shop',
+            canActivate: [roleGuard(['ShopOwner'])],
             loadComponent: () => import('./features/shop-owner/shop-management/shop-management.component').then(m => m.ShopManagementComponent)
           },
           {
             path: 'products',
+            canActivate: [roleGuard(['ShopOwner'])],
             loadComponent: () => import('./features/shop-owner/product-management/product-management.component').then(m => m.ProductManagementComponent)
           }
         ]
@@ -59,8 +65,12 @@ export const routes: Routes = [
             loadComponent: () => import('./features/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
           },
           {
-            path: 'shops',
+            path: 'shops/pending',
             loadComponent: () => import('./features/admin/shop-verification/shop-verification.component').then(m => m.ShopVerificationComponent)
+          },
+          {
+            path: 'shops',
+            loadComponent: () => import('./features/admin/shop-management/shop-management.component').then(m => m.AdminShopManagementComponent)
           },
           {
             path: 'users',

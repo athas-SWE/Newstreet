@@ -29,9 +29,7 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
                 }
                 <button (click)="logout()" class="nav-link button">Logout</button>
               } @else {
-                <a routerLink="/login" class="nav-link">Login</a>
-                <a routerLink="/register" class="nav-link">Register</a>
-                <a routerLink="/login" class="nav-link">For Shop Owners</a>
+                <a routerLink="/shop-owner/register" class="nav-link">For Shop Owners</a>
               }
             </nav>
           </div>
