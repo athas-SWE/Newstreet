@@ -49,9 +49,9 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                 @if (product()!.price) {
                   <p class="product-price">Rs. {{ product()!.price | number:'1.2-2' }}</p>
                 }
-                @if (product()!.stock !== undefined && product()!.stock !== null) {
-                  <p class="product-stock" [class.in-stock]="product()!.stock > 0" [class.out-of-stock]="product()!.stock === 0">
-                    {{ product()!.stock > 0 ? 'In Stock (' + product()!.stock + ' available)' : 'Out of Stock' }}
+                @if (product() && product()!.stock !== undefined && product()!.stock !== null) {
+                  <p class="product-stock" [class.in-stock]="getStock() > 0" [class.out-of-stock]="getStock() === 0">
+                    {{ getStock() > 0 ? 'In Stock (' + getStock() + ' available)' : 'Out of Stock' }}
                   </p>
                 }
                 
@@ -413,6 +413,11 @@ export class ProductDetailComponent implements OnInit {
         this.interestMessage.set('An error occurred. Please try again.');
       }
     });
+  }
+
+  getStock(): number {
+    const currentProduct = this.product();
+    return currentProduct?.stock ?? 0;
   }
 
   getShopSlug(): string {
