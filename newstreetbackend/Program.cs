@@ -22,6 +22,32 @@ builder.Services.AddSwaggerGen();
 // Configure CORS
 builder.Services.AddCors(options =>
 {
+    // Development policy - allows any localhost origin
+    if (builder.Environment.IsDevelopment())
+    {
+        options.AddPolicy("AllowAngular", policy =>
+        {
+            policy.SetIsOriginAllowed(origin => 
+                origin.StartsWith("http://localhost:") || 
+                origin.StartsWith("https://localhost:") ||
+                origin.StartsWith("http://127.0.0.1:") ||
+                origin.StartsWith("https://127.0.0.1:"))
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+        });
+    }
+    else
+    {
+        // Production policy - specific origins only
+        options.AddPolicy("AllowAngular", policy =>
+        {
+            policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+    }
+    
+    // Fallback for development
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
@@ -103,10 +129,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Use CORS BEFORE other middleware (especially before HTTPS redirect)
+app.UseCors("AllowAngular");
 
-// Use CORS
-app.UseCors("AllowAll");
+// Only use HTTPS redirection in production
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 // Use Tenant Middleware (before authentication)
 app.UseMiddleware<TenantMiddleware>();

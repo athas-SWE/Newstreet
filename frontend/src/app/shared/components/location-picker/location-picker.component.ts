@@ -98,13 +98,13 @@ export class LocationPickerComponent implements OnInit, AfterViewInit, OnDestroy
     const initialLng = this.initialLongitude ?? 0;
     const center = { lat: initialLat || 0, lng: initialLng || 0 };
 
-    // Default to a reasonable location if no initial coordinates
-    const defaultCenter = { lat: 0, lng: 0 };
+    // Default to Kalmunai, Sri Lanka if no initial coordinates
+    const defaultCenter = { lat: 7.4167, lng: 81.8167 }; // Kalmunai, Sri Lanka
     const mapCenter = (initialLat && initialLng) ? center : defaultCenter;
 
     this.map = new google.maps.Map(container, {
       center: mapCenter,
-      zoom: (initialLat && initialLng) ? 15 : 2,
+      zoom: (initialLat && initialLng) ? 15 : 10, // Better zoom for Sri Lanka default
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 

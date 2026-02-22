@@ -29,24 +29,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20260219132930_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
-              "RelativeDocumentMoniker": "Migrations\\20260219132930_InitialCreate.cs",
-              "ToolTip": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
-              "RelativeToolTip": "Migrations\\20260219132930_InitialCreate.cs",
-              "ViewState": "AgIAALwAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-22T06:16:43.15Z",
-              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -87,6 +74,19 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20260219132930_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
+              "RelativeDocumentMoniker": "Migrations\\20260219132930_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\Migrations\\20260219132930_InitialCreate.cs",
+              "RelativeToolTip": "Migrations\\20260219132930_InitialCreate.cs",
+              "ViewState": "AgIAALwAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-22T06:16:43.15Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
