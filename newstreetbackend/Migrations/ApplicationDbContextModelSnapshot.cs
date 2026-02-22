@@ -95,6 +95,37 @@ namespace newstreetbackend.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("newstreetbackend.Entities.ProductInterest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("UserEmail")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("UserPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInterests");
+                });
+
             modelBuilder.Entity("newstreetbackend.Entities.Shop", b =>
                 {
                     b.Property<Guid>("Id")
@@ -246,6 +277,17 @@ namespace newstreetbackend.Migrations
                         .IsRequired();
 
                     b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("newstreetbackend.Entities.ProductInterest", b =>
+                {
+                    b.HasOne("newstreetbackend.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("newstreetbackend.Entities.Shop", b =>

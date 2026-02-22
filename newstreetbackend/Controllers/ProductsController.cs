@@ -46,4 +46,22 @@ public class ProductsController : ControllerBase
         var result = await _productService.GetPopularProductsAsync(cityId.Value, count);
         return Ok(result);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ProductDto>> GetProduct(Guid id)
+    {
+        var cityId = TenantMiddleware.GetCityId(HttpContext);
+        if (!cityId.HasValue)
+        {
+            return BadRequest("Invalid subdomain or city not found");
+        }
+
+        var product = await _productService.GetProductByIdAsync(id, cityId.Value);
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(product);
+    }
 }

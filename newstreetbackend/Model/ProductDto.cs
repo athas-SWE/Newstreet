@@ -11,4 +11,5 @@ public class ProductDto
     public int? Stock { get; set; }
     public Guid ShopId { get; set; }
     public string? ShopName { get; set; }
+    public int InterestCount { get; set; }
 }

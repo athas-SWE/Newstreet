@@ -10,10 +10,12 @@ namespace newstreetbackend.Controllers;
 public class ShopsController : ControllerBase
 {
     private readonly IShopService _shopService;
+    private readonly IProductService _productService;
 
-    public ShopsController(IShopService shopService)
+    public ShopsController(IShopService shopService, IProductService productService)
     {
         _shopService = shopService;
+        _productService = productService;
     }
 
     [HttpGet]
@@ -58,5 +60,18 @@ public class ShopsController : ControllerBase
 
         var count = await _shopService.GetShopCountByCityIdAsync(cityId.Value);
         return Ok(count);
+    }
+
+    [HttpGet("{slug}/products")]
+    public async Task<ActionResult<List<Model.ProductDto>>> GetShopProducts(string slug)
+    {
+        var cityId = TenantMiddleware.GetCityId(HttpContext);
+        if (!cityId.HasValue)
+        {
+            return BadRequest("Invalid subdomain or city not found");
+        }
+
+        var products = await _productService.GetProductsByShopSlugAsync(slug, cityId.Value);
+        return Ok(products);
     }
 }

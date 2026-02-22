@@ -78,4 +78,54 @@ public class ProductService : IProductService
             PopularProducts = productDtos
         };
     }
+
+    public async Task<List<ProductDto>> GetProductsByShopSlugAsync(string shopSlug, Guid cityId)
+    {
+        // First get the shop by slug
+        var shop = await _context.Shops
+            .FirstOrDefaultAsync(s => s.Slug == shopSlug && s.CityId == cityId && s.Status == "active");
+
+        if (shop == null)
+        {
+            return new List<ProductDto>();
+        }
+
+        // Get products for this shop
+        var products = await _productRepository.GetProductsByShopIdAsync(shop.Id);
+
+        return products.Select(p => new ProductDto
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price,
+            ImageUrl1 = p.ImageUrl1,
+            ImageUrl2 = p.ImageUrl2,
+            Stock = p.Stock,
+            ShopId = p.ShopId,
+            ShopName = shop.Name
+        }).ToList();
+    }
+
+    public async Task<ProductDto?> GetProductByIdAsync(Guid productId, Guid cityId)
+    {
+        var product = await _productRepository.GetProductByIdAsync(productId);
+        if (product == null || product.Shop == null || product.Shop.CityId != cityId || product.Shop.Status != "active")
+        {
+            return null;
+        }
+
+        return new ProductDto
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            ImageUrl1 = product.ImageUrl1,
+            ImageUrl2 = product.ImageUrl2,
+            Stock = product.Stock,
+            ShopId = product.ShopId,
+            ShopName = product.Shop.Name
+        };
+    }
 }

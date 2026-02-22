@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { TenantService } from './tenant.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,29 @@ import { environment } from '../../../environments/environment';
 export class ApiService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tenantService: TenantService
+  ) {}
 
   private getHeaders(): HttpHeaders {
     // Authorization header is handled by authInterceptor
-    return new HttpHeaders({
+    const headers: { [key: string]: string } = {
       'Content-Type': 'application/json'
-    });
+    };
+
+    // Add city subdomain header if available (for development when no subdomain in URL)
+    const subdomain = this.tenantService.getSubdomain();
+    if (subdomain) {
+      // Ensure subdomain is lowercase to match database
+      const lowerSubdomain = subdomain.toLowerCase();
+      headers['X-City-Subdomain'] = lowerSubdomain;
+      console.log('[ApiService] Sending X-City-Subdomain header:', lowerSubdomain);
+    } else {
+      console.warn('[ApiService] No subdomain available from TenantService');
+    }
+
+    return new HttpHeaders(headers);
   }
 
   private handleError(error: HttpErrorResponse): Observable<never> {

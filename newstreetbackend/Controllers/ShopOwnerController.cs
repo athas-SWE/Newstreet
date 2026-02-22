@@ -6,6 +6,7 @@ using newstreetbackend.Dbcontext;
 using newstreetbackend.Entities;
 using newstreetbackend.Model;
 using newstreetbackend.Repository;
+using newstreetbackend.Services;
 
 namespace newstreetbackend.Controllers;
 
@@ -17,14 +18,17 @@ public class ShopOwnerController : ControllerBase
     private readonly IShopRepository _shopRepository;
     private readonly IProductRepository _productRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IProductInterestService _productInterestService;
     private readonly ApplicationDbContext _context;
 
     public ShopOwnerController(
+        IProductInterestService productInterestService,
         IShopRepository shopRepository, 
         IProductRepository productRepository,
         IUserRepository userRepository,
         ApplicationDbContext context)
     {
+        _productInterestService = productInterestService;
         _shopRepository = shopRepository;
         _productRepository = productRepository;
         _userRepository = userRepository;
@@ -110,6 +114,11 @@ public class ShopOwnerController : ControllerBase
         var shop = user.OwnedShop;
 
         var products = await _productRepository.GetProductsByShopIdAsync(shop.Id);
+        var productIds = products.Select(p => p.Id).ToList();
+        
+        // Get interest counts for all products
+        var interestCounts = await _productInterestService.GetInterestCountsAsync(productIds);
+        
         var productDtos = products.Select(p => new ProductDto
         {
             Id = p.Id,
@@ -119,7 +128,8 @@ public class ShopOwnerController : ControllerBase
             ImageUrl1 = p.ImageUrl1,
             ImageUrl2 = p.ImageUrl2,
             Stock = p.Stock,
-            ShopId = p.ShopId
+            ShopId = p.ShopId,
+            InterestCount = interestCounts.ContainsKey(p.Id) ? interestCounts[p.Id] : 0
         }).ToList();
 
         return Ok(productDtos);

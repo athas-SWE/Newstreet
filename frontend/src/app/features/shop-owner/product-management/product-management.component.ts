@@ -110,6 +110,12 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                   @if (product.price) {
                     <p class="product-price">Rs. {{ product.price }}</p>
                   }
+                  @if (product.interestCount !== undefined) {
+                    <div class="interest-badge">
+                      <span class="interest-icon">👆</span>
+                      <span class="interest-count">{{ product.interestCount }} interest{{ product.interestCount !== 1 ? 's' : '' }}</span>
+                    </div>
+                  }
                   <div class="product-actions">
                     <button (click)="editProduct(product)" class="edit-button">Edit</button>
                     <button (click)="deleteProduct(product.id)" class="delete-button">Delete</button>
@@ -218,6 +224,24 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
     }
     .product-info {
       padding: 1rem;
+    }
+    .interest-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 0.75rem 0;
+      padding: 0.5rem 0.75rem;
+      background: #fef3c7;
+      border-radius: 8px;
+      color: #92400e;
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+    .interest-icon {
+      font-size: 1.125rem;
+    }
+    .interest-count {
+      font-weight: 600;
     }
     .product-actions {
       display: flex;

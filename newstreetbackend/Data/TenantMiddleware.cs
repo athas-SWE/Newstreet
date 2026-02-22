@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using newstreetbackend.Services;
 
 namespace newstreetbackend.Data;
@@ -6,16 +7,31 @@ public class TenantMiddleware
 {
     private readonly RequestDelegate _next;
     private const string TenantContextKey = "TenantCityId";
+    private const string CitySubdomainHeader = "X-City-Subdomain";
 
     public TenantMiddleware(RequestDelegate next)
     {
         _next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context, ITenantService tenantService)
+    public async Task InvokeAsync(HttpContext context, ITenantService tenantService, ILogger<TenantMiddleware> logger)
     {
         var host = context.Request.Host.Host;
         var subdomain = ExtractSubdomain(host);
+
+        // If no subdomain in host, check for header (useful for development)
+        if (string.IsNullOrEmpty(subdomain))
+        {
+            if (context.Request.Headers.TryGetValue(CitySubdomainHeader, out var headerSubdomain))
+            {
+                subdomain = headerSubdomain.ToString().ToLower();
+                logger.LogInformation($"Using subdomain from header: {subdomain}");
+            }
+            else
+            {
+                logger.LogWarning($"No subdomain found in host ({host}) and no {CitySubdomainHeader} header present");
+            }
+        }
 
         if (!string.IsNullOrEmpty(subdomain))
         {
@@ -23,6 +39,11 @@ public class TenantMiddleware
             if (cityId.HasValue)
             {
                 context.Items[TenantContextKey] = cityId.Value;
+                logger.LogDebug($"City ID {cityId.Value} set for subdomain: {subdomain}");
+            }
+            else
+            {
+                logger.LogWarning($"No city found for subdomain: {subdomain}");
             }
         }
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
-import { SearchResponse, PopularProductsResponse } from '../models/product.model';
+import { SearchResponse, PopularProductsResponse, Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +15,13 @@ export class ProductService {
 
   getPopularProducts(count: number = 10): Observable<PopularProductsResponse> {
     return this.apiService.get<PopularProductsResponse>(`products/popular?count=${count}`);
+  }
+
+  getProductsByShopSlug(slug: string): Observable<Product[]> {
+    return this.apiService.get<Product[]>(`shops/${slug}/products`);
+  }
+
+  getProductById(id: string): Observable<Product> {
+    return this.apiService.get<Product>(`products/${id}`);
   }
 }

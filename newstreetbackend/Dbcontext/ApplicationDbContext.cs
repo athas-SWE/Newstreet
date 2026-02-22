@@ -14,6 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Tenant> Tenants { get; set; }
+    public DbSet<ProductInterest> ProductInterests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -95,6 +96,21 @@ public class ApplicationDbContext : DbContext
                 .WithMany(c => c.Tenants)
                 .HasForeignKey(e => e.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // ProductInterest configuration
+        modelBuilder.Entity<ProductInterest>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.ProductId);
+            entity.Property(e => e.UserEmail).HasMaxLength(255);
+            entity.Property(e => e.UserName).HasMaxLength(200);
+            entity.Property(e => e.UserPhone).HasMaxLength(20);
+
+            entity.HasOne(e => e.Product)
+                .WithMany()
+                .HasForeignKey(e => e.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

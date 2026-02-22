@@ -8,6 +8,7 @@ export interface Product {
   stock?: number;
   shopId: string;
   shopName?: string;
+  interestCount?: number;
 }
 
 export interface SearchResponse {
