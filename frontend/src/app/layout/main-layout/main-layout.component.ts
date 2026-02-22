@@ -22,6 +22,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background: var(--bg-secondary);
     }
     .main-content {
       flex: 1;

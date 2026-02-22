@@ -39,16 +39,19 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   `,
   styles: [`
     .header {
-      background: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: var(--bg-primary);
+      box-shadow: var(--shadow-sm);
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.95);
     }
     .container {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 0 1.5rem;
     }
     .header-content {
       display: flex;
@@ -59,12 +62,19 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
     }
     .logo {
       text-decoration: none;
-      color: #333;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
     }
     .logo h1 {
       margin: 0;
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
     }
     .header-actions {
       display: flex;
@@ -75,32 +85,47 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
     }
     .nav {
       display: flex;
-      gap: 1rem;
+      gap: 0.5rem;
       align-items: center;
     }
     .nav-link {
       text-decoration: none;
-      color: #666;
-      font-size: 0.9rem;
-      transition: color 0.3s;
+      color: var(--text-secondary);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-md);
+      transition: all 0.2s ease;
     }
     .nav-link:hover {
-      color: #3498db;
+      color: var(--primary-color);
+      background: var(--bg-tertiary);
     }
     .nav-link.button {
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0;
+      padding: 0.5rem 1rem;
+      font-size: 0.9375rem;
+      font-weight: 500;
+    }
+    .nav-link.button:hover {
+      background: var(--bg-tertiary);
     }
     @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
       .header-content {
-        flex-direction: column;
+        flex-wrap: wrap;
         gap: 1rem;
       }
       .header-actions {
         width: 100%;
-        flex-direction: column;
+        justify-content: space-between;
+      }
+      .nav {
+        flex-wrap: wrap;
       }
     }
   `]

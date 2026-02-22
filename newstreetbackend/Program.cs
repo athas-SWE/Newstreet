@@ -58,7 +58,7 @@ builder.Services.AddCors(options =>
 
 // Configure Entity Framework with MySQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-    ?? "Server=localhost;Database=streetmain;User=root;Password=;Port=3306;";
+    ?? "Server=localhost;Database=localhub;User=root;Password=;Port=3306;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
@@ -75,11 +75,12 @@ builder.Services.AddScoped<IShopService, ShopService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
 
 // Configure JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSecretKeyForJWTTokenGeneration123456789";
-var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "StreetMain";
-var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "StreetMainUsers";
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "LocalHub";
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "LocalHubUsers";
 
 builder.Services.AddAuthentication(options =>
 {

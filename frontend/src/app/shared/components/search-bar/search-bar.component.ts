@@ -22,34 +22,60 @@ import { Router } from '@angular/router';
   styles: [`
     .search-bar {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.75rem;
       width: 100%;
       max-width: 600px;
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-md);
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      transition: all 0.2s ease;
+    }
+    .search-bar:focus-within {
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-color);
     }
     .search-input {
       flex: 1;
-      padding: 0.75rem 1rem;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 1rem;
+      padding: 0.875rem 1.25rem;
+      border: none;
+      background: transparent;
+      font-size: 0.9375rem;
       outline: none;
-      transition: border-color 0.3s;
+      color: var(--text-primary);
     }
-    .search-input:focus {
-      border-color: #3498db;
+    .search-input::placeholder {
+      color: var(--text-muted);
     }
     .search-button {
-      padding: 0.75rem 1.5rem;
-      background-color: #3498db;
+      padding: 0.875rem 1.75rem;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: var(--radius-lg);
       cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
     }
     .search-button:hover {
-      background-color: #2980b9;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .search-button:active {
+      transform: translateY(0);
+    }
+    @media (max-width: 640px) {
+      .search-bar {
+        flex-direction: column;
+        padding: 0.75rem;
+      }
+      .search-button {
+        width: 100%;
+      }
     }
   `]
 })

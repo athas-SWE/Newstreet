@@ -3,7 +3,8 @@ export interface Product {
   name: string;
   description?: string;
   price?: number;
-  imageUrl?: string;
+  imageUrl1?: string;
+  imageUrl2?: string;
   stock?: number;
   shopId: string;
   shopName?: string;

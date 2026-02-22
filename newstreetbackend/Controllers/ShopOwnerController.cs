@@ -116,7 +116,8 @@ public class ShopOwnerController : ControllerBase
             Name = p.Name,
             Description = p.Description,
             Price = p.Price,
-            ImageUrl = p.ImageUrl,
+            ImageUrl1 = p.ImageUrl1,
+            ImageUrl2 = p.ImageUrl2,
             Stock = p.Stock,
             ShopId = p.ShopId
         }).ToList();
@@ -143,7 +144,8 @@ public class ShopOwnerController : ControllerBase
             Name = productDto.Name,
             Description = productDto.Description,
             Price = productDto.Price,
-            ImageUrl = productDto.ImageUrl,
+            ImageUrl1 = productDto.ImageUrl1,
+            ImageUrl2 = productDto.ImageUrl2,
             Stock = productDto.Stock,
             ShopId = shop.Id
         };
@@ -174,7 +176,8 @@ public class ShopOwnerController : ControllerBase
         product.Name = productDto.Name;
         product.Description = productDto.Description;
         product.Price = productDto.Price;
-        product.ImageUrl = productDto.ImageUrl;
+        product.ImageUrl1 = productDto.ImageUrl1;
+        product.ImageUrl2 = productDto.ImageUrl2;
         product.Stock = productDto.Stock;
 
         await _productRepository.UpdateProductAsync(product);

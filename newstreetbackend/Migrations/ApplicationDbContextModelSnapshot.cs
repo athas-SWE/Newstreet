@@ -62,7 +62,10 @@ namespace newstreetbackend.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImageUrl1")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl2")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")

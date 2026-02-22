@@ -18,7 +18,7 @@ declare var google: any;
             Longitude: {{ selectedLocation()?.lng?.toFixed(6) }}
           </p>
         } @else {
-          <p class="instructions">Click on the map to select a location</p>
+          <p class="instructions">Click on the map to select a location (optional)</p>
         }
       </div>
     </div>

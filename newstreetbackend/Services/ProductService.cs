@@ -36,7 +36,8 @@ public class ProductService : IProductService
             Name = p.Name,
             Description = p.Description,
             Price = p.Price,
-            ImageUrl = p.ImageUrl,
+            ImageUrl1 = p.ImageUrl1,
+            ImageUrl2 = p.ImageUrl2,
             Stock = p.Stock,
             ShopId = p.ShopId,
             ShopName = p.Shop?.Name
@@ -61,7 +62,8 @@ public class ProductService : IProductService
             Name = p.Name,
             Description = p.Description,
             Price = p.Price,
-            ImageUrl = p.ImageUrl,
+            ImageUrl1 = p.ImageUrl1,
+            ImageUrl2 = p.ImageUrl2,
             Stock = p.Stock,
             ShopId = p.ShopId,
             ShopName = p.Shop?.Name

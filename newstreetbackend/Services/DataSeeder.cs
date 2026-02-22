@@ -215,7 +215,7 @@ public class DataSeeder
                 Price = 250.00m,
                 Stock = 50,
                 ShopId = shop.Id,
-                ImageUrl = "https://via.placeholder.com/300?text=Milk",
+                ImageUrl1 = "https://via.placeholder.com/300?text=Milk",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             },
@@ -227,7 +227,7 @@ public class DataSeeder
                 Price = 120.00m,
                 Stock = 30,
                 ShopId = shop.Id,
-                ImageUrl = "https://via.placeholder.com/300?text=Bread",
+                ImageUrl1 = "https://via.placeholder.com/300?text=Bread",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             },
@@ -239,7 +239,7 @@ public class DataSeeder
                 Price = 350.00m,
                 Stock = 25,
                 ShopId = shop.Id,
-                ImageUrl = "https://via.placeholder.com/300?text=Eggs",
+                ImageUrl1 = "https://via.placeholder.com/300?text=Eggs",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             },
@@ -251,7 +251,7 @@ public class DataSeeder
                 Price = 850.00m,
                 Stock = 20,
                 ShopId = shop.Id,
-                ImageUrl = "https://via.placeholder.com/300?text=Rice",
+                ImageUrl1 = "https://via.placeholder.com/300?text=Rice",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             },
@@ -263,7 +263,7 @@ public class DataSeeder
                 Price = 450.00m,
                 Stock = 40,
                 ShopId = shop.Id,
-                ImageUrl = "https://via.placeholder.com/300?text=Oil",
+                ImageUrl1 = "https://via.placeholder.com/300?text=Oil",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             }

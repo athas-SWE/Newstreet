@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
+import { ImageUploadService } from '../../../core/services/image-upload.service';
 import { Shop } from '../../../core/models/shop.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { LocationPickerComponent } from '../../../shared/components/location-picker/location-picker.component';
@@ -36,8 +37,26 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
               <input type="tel" id="whatsapp" [(ngModel)]="shopData.whatsApp" name="whatsapp" class="form-input" />
             </div>
             <div class="form-group">
-              <label for="logoUrl">Logo URL</label>
-              <input type="url" id="logoUrl" [(ngModel)]="shopData.logoUrl" name="logoUrl" class="form-input" />
+              <label>Shop Logo</label>
+              <div class="logo-upload-section">
+                <label for="logoFile" class="logo-upload-label">
+                  @if (shopData.logoUrl) {
+                    <div class="logo-preview">
+                      <img [src]="shopData.logoUrl" alt="Shop Logo" />
+                      <button type="button" (click)="removeLogo()" class="remove-logo-btn">×</button>
+                    </div>
+                  } @else {
+                    <div class="upload-placeholder">
+                      <span>🏪</span>
+                      <span>Upload Shop Logo</span>
+                    </div>
+                  }
+                </label>
+                <input type="file" id="logoFile" accept="image/*" (change)="onLogoSelected($event)" style="display: none;" />
+                @if (uploadingLogo()) {
+                  <div class="upload-progress">Uploading...</div>
+                }
+              </div>
             </div>
             <div class="form-group">
               <label>
@@ -46,8 +65,8 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
               </label>
             </div>
             <div class="form-group">
-              <label>Shop Location</label>
-              <p class="location-description">Update your shop's location on the map</p>
+              <label>Shop Location (Optional)</label>
+              <p class="location-description">Click on the map to set or update your shop's location</p>
               <app-location-picker
                 [initialLatitude]="shopData.latitude"
                 [initialLongitude]="shopData.longitude"
@@ -133,6 +152,70 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
       opacity: 0.6;
       cursor: not-allowed;
     }
+    .logo-upload-section {
+      margin-top: 0.5rem;
+    }
+    .logo-upload-label {
+      display: block;
+      cursor: pointer;
+      border: 2px dashed #e0e0e0;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      transition: border-color 0.3s;
+    }
+    .logo-upload-label:hover {
+      border-color: #3498db;
+    }
+    .upload-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: #999;
+      padding: 2rem 1rem;
+    }
+    .upload-placeholder span:first-child {
+      font-size: 2rem;
+    }
+    .logo-preview {
+      position: relative;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      height: 200px;
+    }
+    .logo-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+    .remove-logo-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: rgba(231, 76, 60, 0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .remove-logo-btn:hover {
+      background: rgba(231, 76, 60, 1);
+    }
+    .upload-progress {
+      margin-top: 0.5rem;
+      color: #3498db;
+      font-size: 0.9rem;
+      text-align: center;
+    }
   `]
 })
 export class ShopManagementComponent implements OnInit {
@@ -147,9 +230,11 @@ export class ShopManagementComponent implements OnInit {
   loading = signal<boolean>(true);
   saving = signal<boolean>(false);
   error = signal<string>('');
+  uploadingLogo = signal<boolean>(false);
 
   constructor(
     private apiService: ApiService,
+    private imageUploadService: ImageUploadService,
     private router: Router
   ) {}
 
@@ -189,5 +274,41 @@ export class ShopManagementComponent implements OnInit {
         this.saving.set(false);
       }
     });
+  }
+
+  onLogoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+
+      // Validate file size (10MB)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size must be less than 10MB');
+        return;
+      }
+
+      this.uploadingLogo.set(true);
+      this.imageUploadService.uploadShopImage(file).subscribe({
+        next: (response) => {
+          this.shopData.logoUrl = response.imageUrl;
+          this.uploadingLogo.set(false);
+        },
+        error: (error) => {
+          console.error('Error uploading logo:', error);
+          alert('Failed to upload logo. Please try again.');
+          this.uploadingLogo.set(false);
+        }
+      });
+    }
+  }
+
+  removeLogo(): void {
+    this.shopData.logoUrl = '';
   }
 }

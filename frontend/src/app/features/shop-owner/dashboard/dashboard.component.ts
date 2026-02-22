@@ -67,8 +67,10 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
                 <div class="products-grid">
                   @for (product of products(); track product.id) {
                     <div class="product-card">
-                      @if (product.imageUrl) {
-                        <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
+                      @if (product.imageUrl1) {
+                        <img [src]="product.imageUrl1" [alt]="product.name" class="product-image" />
+                      } @else if (product.imageUrl2) {
+                        <img [src]="product.imageUrl2" [alt]="product.name" class="product-image" />
                       } @else {
                         <div class="product-image-placeholder">No Image</div>
                       }

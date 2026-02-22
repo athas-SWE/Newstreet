@@ -117,7 +117,7 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
               <div class="form-actions">
                 <button type="button" (click)="previousStep()" class="secondary-button">Back</button>
                 <button type="submit" [disabled]="loading()" class="submit-button">
-                  Next: Select Location
+                  Next: Location (Optional)
                 </button>
               </div>
             </form>
@@ -127,8 +127,8 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
         <!-- Step 3: Location -->
         @if (currentStep() === 3) {
           <div class="step-content">
-            <h2>Step 3: Select Shop Location</h2>
-            <p class="step-description">Click on the map to set your shop's location</p>
+            <h2>Step 3: Select Shop Location (Optional)</h2>
+            <p class="step-description">Click on the map to set your shop's location. You can skip this step and add it later.</p>
             <app-location-picker
               (locationSelected)="onLocationSelected($event)"
             ></app-location-picker>
@@ -137,8 +137,13 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
             }
             <div class="form-actions">
               <button type="button" (click)="previousStep()" class="secondary-button">Back</button>
-              <button type="button" (click)="onSubmit()" [disabled]="loading() || !formData.latitude || !formData.longitude" class="submit-button">
+              <button type="button" (click)="onSubmit()" [disabled]="loading()" class="submit-button">
                 {{ loading() ? 'Registering...' : 'Complete Registration' }}
+              </button>
+            </div>
+            <div class="skip-location">
+              <button type="button" (click)="skipLocation()" [disabled]="loading()" class="skip-button">
+                Skip Location Setup
               </button>
             </div>
           </div>
@@ -255,6 +260,27 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
       color: #3498db;
       text-decoration: none;
     }
+    .skip-location {
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .skip-button {
+      background: transparent;
+      color: #666;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: underline;
+      transition: color 0.3s;
+    }
+    .skip-button:hover:not(:disabled) {
+      color: #3498db;
+    }
+    .skip-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   `]
 })
 export class ShopOwnerRegisterComponent {
@@ -305,12 +331,13 @@ export class ShopOwnerRegisterComponent {
     this.formData.longitude = location.lng;
   }
 
-  onSubmit(): void {
-    if (!this.formData.latitude || !this.formData.longitude) {
-      this.error.set('Please select a location on the map');
-      return;
-    }
+  skipLocation(): void {
+    this.formData.latitude = undefined;
+    this.formData.longitude = undefined;
+    this.onSubmit();
+  }
 
+  onSubmit(): void {
     this.loading.set(true);
     this.error.set('');
 
