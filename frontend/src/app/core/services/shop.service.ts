@@ -20,4 +20,8 @@ export class ShopService {
   getShopCount(): Observable<number> {
     return this.apiService.get<number>('shops/count');
   }
+
+  getMyShop(): Observable<Shop> {
+    return this.apiService.get<Shop>('shopowner/shop');
+  }
 }
