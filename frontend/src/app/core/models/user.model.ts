@@ -27,4 +27,5 @@ export interface RegisterRequest {
   whatsApp?: string;
   latitude?: number;
   longitude?: number;
+  industryId?: string;
 }

@@ -38,12 +38,16 @@ builder.Services.AddCors(options =>
     }
     else
     {
-        // Production policy - specific origins only
+        // Production policy - read allowed origins from environment variable
+        var allowedOrigins = builder.Configuration["CORS:AllowedOrigins"]?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            ?? new[] { "http://localhost:4200", "https://localhost:4200" };
+        
         options.AddPolicy("AllowAngular", policy =>
         {
-            policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+            policy.WithOrigins(allowedOrigins)
                   .AllowAnyMethod()
-                  .AllowAnyHeader();
+                  .AllowAnyHeader()
+                  .AllowCredentials();
         });
     }
     
@@ -57,7 +61,10 @@ builder.Services.AddCors(options =>
 });
 
 // Configure Entity Framework with MySQL
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+// Priority: DATABASE_URL env var > MYSQL_URL env var > ConnectionStrings:DefaultConnection > fallback
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+    ?? Environment.GetEnvironmentVariable("MYSQL_URL")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection") 
     ?? "Server=localhost;Database=localhub;User=root;Password=;Port=3306;";
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -69,6 +76,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITenantRepository, TenantRepository>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IProductInterestRepository, ProductInterestRepository>();
+builder.Services.AddScoped<IIndustryRepository, IndustryRepository>();
 
 // Register Services
 builder.Services.AddScoped<ITenantService, TenantService>();
@@ -78,6 +86,7 @@ builder.Services.AddScoped<IProductInterestService, ProductInterestService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IImageUploadService, ImageUploadService>();
+builder.Services.AddScoped<IIndustryService, IndustryService>();
 
 // Configure JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "YourSecretKeyForJWTTokenGeneration123456789";
@@ -107,6 +116,16 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Configure port for Railway (Railway sets PORT environment variable)
+// Only override port if PORT env var is explicitly set (for production deployments)
+// In development, let launchSettings.json handle the port configuration
+var port = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrEmpty(port))
+{
+    app.Urls.Clear();
+    app.Urls.Add($"http://0.0.0.0:{port}");
+}
+
 // Seed database
 using (var scope = app.Services.CreateScope())
 {
@@ -135,10 +154,12 @@ if (app.Environment.IsDevelopment())
 // Use CORS BEFORE other middleware (especially before HTTPS redirect)
 app.UseCors("AllowAngular");
 
-// Only use HTTPS redirection in production
-if (!app.Environment.IsDevelopment())
+// HTTPS redirection is handled by Railway's proxy, so we skip it in production
+// Only use HTTPS redirection in development if needed
+if (app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();
+    // HTTPS redirection can be enabled in development if needed
+    // app.UseHttpsRedirection();
 }
 
 // Use Tenant Middleware (before authentication)

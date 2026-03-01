@@ -4,7 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { ImageUploadService } from '../../../core/services/image-upload.service';
+import { IndustryService } from '../../../core/services/industry.service';
 import { Shop } from '../../../core/models/shop.model';
+import { Industry } from '../../../core/models/industry.model';
 import { LoadingSpinnerComponent } from '../../../shared/components/loading-spinner/loading-spinner.component';
 import { LocationPickerComponent } from '../../../shared/components/location-picker/location-picker.component';
 
@@ -35,6 +37,21 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
             <div class="form-group">
               <label for="whatsapp">WhatsApp</label>
               <input type="tel" id="whatsapp" [(ngModel)]="shopData.whatsApp" name="whatsapp" class="form-input" />
+            </div>
+            <div class="form-group">
+              <label for="industryId">Industry</label>
+              <select
+                id="industryId"
+                name="industryId"
+                [(ngModel)]="shopData.industryId"
+                class="form-input"
+              >
+                <option [value]="undefined">Select an industry</option>
+                @for (industry of industries(); track industry.id) {
+                  <option [value]="industry.id">{{ industry.name }}</option>
+                }
+              </select>
+              <small class="form-hint">Choose the industry category for your shop</small>
             </div>
             <div class="form-group">
               <label>Shop Logo</label>
@@ -216,6 +233,12 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
       font-size: 0.9rem;
       text-align: center;
     }
+    .form-hint {
+      display: block;
+      margin-top: 0.25rem;
+      color: #666;
+      font-size: 0.875rem;
+    }
   `]
 })
 export class ShopManagementComponent implements OnInit {
@@ -225,8 +248,10 @@ export class ShopManagementComponent implements OnInit {
     phone: '',
     whatsApp: '',
     logoUrl: '',
-    isDeliveryAvailable: false
+    isDeliveryAvailable: false,
+    industryId: undefined
   };
+  industries = signal<Industry[]>([]);
   loading = signal<boolean>(true);
   saving = signal<boolean>(false);
   error = signal<string>('');
@@ -235,18 +260,34 @@ export class ShopManagementComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private imageUploadService: ImageUploadService,
+    private industryService: IndustryService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.loadIndustries();
     this.loadShop();
+  }
+
+  loadIndustries(): void {
+    this.industryService.getIndustries().subscribe({
+      next: (industries) => {
+        this.industries.set(industries);
+      },
+      error: (error) => {
+        console.error('Error loading industries:', error);
+      }
+    });
   }
 
   loadShop(): void {
     this.loading.set(true);
     this.apiService.get<Shop>('shopowner/shop').subscribe({
       next: (shop) => {
-        this.shopData = shop;
+        this.shopData = {
+          ...shop,
+          industryId: shop.industry?.id || undefined
+        };
         this.loading.set(false);
       },
       error: (error) => {

@@ -5,6 +5,7 @@ namespace newstreetbackend.Repository;
 public interface IShopRepository
 {
     Task<List<Shop>> GetAllShopsByCityIdAsync(Guid cityId);
+    Task<List<Shop>> GetShopsByIndustryIdAsync(Guid industryId, Guid cityId);
     Task<Shop?> GetShopBySlugAsync(string slug, Guid cityId);
     Task<Shop?> GetShopByIdAsync(Guid id);
     Task<int> GetShopCountByCityIdAsync(Guid cityId);

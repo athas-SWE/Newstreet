@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6q/tQqS+L54=",
+  "dgSpecHash": "6oPXQglSxxg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Athas AR\\Source\\Repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
+  "projectFilePath": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Athas AR\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Athas AR\\.nuget\\packages\\cloudinarydotnet\\1.21.0\\cloudinarydotnet.1.21.0.nupkg.sha512",
@@ -64,5 +64,15 @@
     "C:\\Users\\Athas AR\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512",
     "C:\\Users\\Athas AR\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
+      "projectPath": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Athas AR\\source\\repos\\Newstreet\\newstreetbackend\\newstreetbackend.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

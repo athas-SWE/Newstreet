@@ -76,4 +76,21 @@ export class AdminService {
   deleteTenant(tenantId: string): Observable<void> {
     return this.apiService.delete<void>(`admin/tenants/${tenantId}`);
   }
+
+  // Industries
+  getIndustries(): Observable<any> {
+    return this.apiService.get<any>('industries');
+  }
+
+  createIndustry(industry: any): Observable<any> {
+    return this.apiService.post<any>('industries', industry);
+  }
+
+  updateIndustry(industryId: string, industry: any): Observable<any> {
+    return this.apiService.put<any>(`industries/${industryId}`, industry);
+  }
+
+  deleteIndustry(industryId: string): Observable<void> {
+    return this.apiService.delete<void>(`industries/${industryId}`);
+  }
 }

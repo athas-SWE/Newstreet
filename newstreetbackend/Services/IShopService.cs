@@ -5,6 +5,7 @@ namespace newstreetbackend.Services;
 public interface IShopService
 {
     Task<List<ShopDto>> GetShopsByCityIdAsync(Guid cityId);
+    Task<List<ShopDto>> GetShopsByIndustryIdAsync(Guid industryId, Guid cityId);
     Task<ShopDto?> GetShopBySlugAsync(string slug, Guid cityId);
     Task<int> GetShopCountByCityIdAsync(Guid cityId);
 }

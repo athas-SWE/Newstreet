@@ -1,3 +1,5 @@
+import { Industry } from './industry.model';
+
 export interface Shop {
   id: string;
   name: string;
@@ -11,7 +13,9 @@ export interface Shop {
   isVerified: boolean;
   isDeliveryAvailable: boolean;
   status: string;
+  industryId?: string;
   city?: City;
+  industry?: Industry;
 }
 
 export interface City {

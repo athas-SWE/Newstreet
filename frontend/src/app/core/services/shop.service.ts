@@ -24,4 +24,8 @@ export class ShopService {
   getMyShop(): Observable<Shop> {
     return this.apiService.get<Shop>('shopowner/shop');
   }
+
+  getShopsByIndustry(industryId: string): Observable<Shop[]> {
+    return this.apiService.get<Shop[]>(`shops/industry/${industryId}`);
+  }
 }

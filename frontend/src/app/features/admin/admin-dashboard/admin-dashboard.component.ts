@@ -40,6 +40,7 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
               <a routerLink="/admin/shops/pending" class="action-button">Pending Shops</a>
               <a routerLink="/admin/users" class="action-button">Manage Users</a>
               <a routerLink="/admin/cities" class="action-button">Manage Cities</a>
+              <a routerLink="/admin/industries" class="action-button">Manage Industries</a>
             </div>
           </div>
         }

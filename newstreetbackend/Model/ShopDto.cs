@@ -14,7 +14,9 @@ public class ShopDto
     public bool IsVerified { get; set; }
     public bool IsDeliveryAvailable { get; set; }
     public string Status { get; set; } = string.Empty;
+    public Guid? IndustryId { get; set; }
     public CityDto? City { get; set; }
+    public IndustryDto? Industry { get; set; }
 }
 
 public class CityDto

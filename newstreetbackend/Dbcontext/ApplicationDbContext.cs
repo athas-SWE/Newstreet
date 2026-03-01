@@ -15,6 +15,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Tenant> Tenants { get; set; }
     public DbSet<ProductInterest> ProductInterests { get; set; }
+    public DbSet<Industry> Industries { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,12 +30,23 @@ public class ApplicationDbContext : DbContext
             entity.Property(e => e.Slug).IsRequired().HasMaxLength(200);
         });
 
+        // Industry configuration
+        modelBuilder.Entity<Industry>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.HasIndex(e => e.Slug).IsUnique();
+            entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Slug).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Description).HasMaxLength(1000);
+        });
+
         // Shop configuration
         modelBuilder.Entity<Shop>(entity =>
         {
             entity.HasKey(e => e.Id);
             entity.HasIndex(e => e.Slug);
             entity.HasIndex(e => e.CityId);
+            entity.HasIndex(e => e.IndustryId);
             entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Slug).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Address).IsRequired().HasMaxLength(500);
@@ -45,6 +57,11 @@ public class ApplicationDbContext : DbContext
                 .WithMany(c => c.Shops)
                 .HasForeignKey(e => e.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            entity.HasOne(e => e.Industry)
+                .WithMany(i => i.Shops)
+                .HasForeignKey(e => e.IndustryId)
+                .OnDelete(DeleteBehavior.SetNull);
 
             entity.HasOne(e => e.Owner)
                 .WithOne(u => u.OwnedShop)

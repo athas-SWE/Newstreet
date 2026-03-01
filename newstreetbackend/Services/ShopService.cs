@@ -19,6 +19,12 @@ public class ShopService : IShopService
         return shops.Select(MapToDto).ToList();
     }
 
+    public async Task<List<ShopDto>> GetShopsByIndustryIdAsync(Guid industryId, Guid cityId)
+    {
+        var shops = await _shopRepository.GetShopsByIndustryIdAsync(industryId, cityId);
+        return shops.Select(MapToDto).ToList();
+    }
+
     public async Task<ShopDto?> GetShopBySlugAsync(string slug, Guid cityId)
     {
         var shop = await _shopRepository.GetShopBySlugAsync(slug, cityId);
@@ -51,6 +57,17 @@ public class ShopService : IShopService
                 Id = shop.City.Id,
                 Name = shop.City.Name,
                 Slug = shop.City.Slug
+            } : null,
+            Industry = shop.Industry != null ? new IndustryDto
+            {
+                Id = shop.Industry.Id,
+                Name = shop.Industry.Name,
+                Slug = shop.Industry.Slug,
+                Description = shop.Industry.Description,
+                IconUrl = shop.Industry.IconUrl,
+                IsActive = shop.Industry.IsActive,
+                CreatedAt = shop.Industry.CreatedAt,
+                UpdatedAt = shop.Industry.UpdatedAt
             } : null
         };
     }

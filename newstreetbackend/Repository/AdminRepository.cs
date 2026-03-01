@@ -17,6 +17,7 @@ public class AdminRepository : IAdminRepository
     {
         var query = _context.Shops
             .Include(s => s.City)
+            .Include(s => s.Industry)
             .Include(s => s.Owner)
             .AsQueryable();
 
@@ -71,6 +72,8 @@ public class AdminRepository : IAdminRepository
     {
         return await _context.Shops
             .Include(s => s.City)
+            .Include(s => s.Industry)
+            .Include(s => s.Owner)
             .Where(s => !s.IsVerified && s.Status == "active")
             .OrderBy(s => s.City.Name)
             .ThenBy(s => s.Name)

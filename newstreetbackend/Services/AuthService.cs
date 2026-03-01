@@ -108,6 +108,7 @@ public class AuthService : IAuthService
                     Latitude = request.Latitude,
                     Longitude = request.Longitude,
                     CityId = cityId.Value,
+                    IndustryId = request.IndustryId,
                     OwnerId = user.Id,
                     Status = "pending" // New shops start as pending until verified
                 };

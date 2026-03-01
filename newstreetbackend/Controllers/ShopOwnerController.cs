@@ -47,7 +47,15 @@ public class ShopOwnerController : ControllerBase
             return NotFound("Shop not found");
         }
 
-        var shop = user.OwnedShop;
+        var shop = await _context.Shops
+            .Include(s => s.Industry)
+            .Include(s => s.City)
+            .FirstOrDefaultAsync(s => s.Id == user.OwnedShop.Id);
+
+        if (shop == null)
+        {
+            return NotFound("Shop not found");
+        }
 
         var shopDto = new ShopDto
         {
@@ -62,7 +70,25 @@ public class ShopOwnerController : ControllerBase
             Longitude = shop.Longitude,
             IsVerified = shop.IsVerified,
             IsDeliveryAvailable = shop.IsDeliveryAvailable,
-            Status = shop.Status
+            Status = shop.Status,
+            IndustryId = shop.IndustryId,
+            Industry = shop.Industry != null ? new IndustryDto
+            {
+                Id = shop.Industry.Id,
+                Name = shop.Industry.Name,
+                Slug = shop.Industry.Slug,
+                Description = shop.Industry.Description,
+                IconUrl = shop.Industry.IconUrl,
+                IsActive = shop.Industry.IsActive,
+                CreatedAt = shop.Industry.CreatedAt,
+                UpdatedAt = shop.Industry.UpdatedAt
+            } : null,
+            City = shop.City != null ? new CityDto
+            {
+                Id = shop.City.Id,
+                Name = shop.City.Name,
+                Slug = shop.City.Slug
+            } : null
         };
 
         return Ok(shopDto);
@@ -94,9 +120,65 @@ public class ShopOwnerController : ControllerBase
         shop.Latitude = shopDto.Latitude;
         shop.Longitude = shopDto.Longitude;
         shop.IsDeliveryAvailable = shopDto.IsDeliveryAvailable;
+        
+        // Update IndustryId if provided
+        if (shopDto.IndustryId.HasValue)
+        {
+            // Verify the industry exists
+            var industryExists = await _context.Industries.AnyAsync(i => i.Id == shopDto.IndustryId.Value && i.IsActive);
+            if (industryExists)
+            {
+                shop.IndustryId = shopDto.IndustryId.Value;
+            }
+        }
+        else
+        {
+            shop.IndustryId = null;
+        }
 
         await _shopRepository.UpdateShopAsync(shop);
-        return Ok(shopDto);
+        
+        // Reload shop with industry to return updated data
+        var updatedShop = await _context.Shops
+            .Include(s => s.Industry)
+            .Include(s => s.City)
+            .FirstOrDefaultAsync(s => s.Id == shop.Id);
+        
+        var updatedShopDto = new ShopDto
+        {
+            Id = updatedShop!.Id,
+            Name = updatedShop.Name,
+            Slug = updatedShop.Slug,
+            LogoUrl = updatedShop.LogoUrl,
+            Address = updatedShop.Address,
+            Phone = updatedShop.Phone,
+            WhatsApp = updatedShop.WhatsApp,
+            Latitude = updatedShop.Latitude,
+            Longitude = updatedShop.Longitude,
+            IsVerified = updatedShop.IsVerified,
+            IsDeliveryAvailable = updatedShop.IsDeliveryAvailable,
+            Status = updatedShop.Status,
+            IndustryId = updatedShop.IndustryId,
+            Industry = updatedShop.Industry != null ? new IndustryDto
+            {
+                Id = updatedShop.Industry.Id,
+                Name = updatedShop.Industry.Name,
+                Slug = updatedShop.Industry.Slug,
+                Description = updatedShop.Industry.Description,
+                IconUrl = updatedShop.Industry.IconUrl,
+                IsActive = updatedShop.Industry.IsActive,
+                CreatedAt = updatedShop.Industry.CreatedAt,
+                UpdatedAt = updatedShop.Industry.UpdatedAt
+            } : null,
+            City = updatedShop.City != null ? new CityDto
+            {
+                Id = updatedShop.City.Id,
+                Name = updatedShop.City.Name,
+                Slug = updatedShop.City.Slug
+            } : null
+        };
+        
+        return Ok(updatedShopDto);
     }
 
     [HttpGet("products")]

@@ -249,4 +249,4 @@ C:\Users\Athas AR\Source\Repos\Newstreet\newstreetbackend\obj\Debug\net8.0\newst
 C:\Users\Athas AR\Source\Repos\Newstreet\newstreetbackend\obj\Debug\net8.0\ref\newstreetbackend.dll
 C:\Users\Athas AR\Source\Repos\Newstreet\newstreetbackend\bin\Debug\net8.0\CloudinaryDotNet.dll
 C:\Users\Athas AR\Source\Repos\Newstreet\newstreetbackend\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\Athas AR\Source\Repos\Newstreet\newstreetbackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\Athas AR\source\repos\Newstreet\newstreetbackend\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

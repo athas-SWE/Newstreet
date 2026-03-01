@@ -2,9 +2,11 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ShopService } from '../../core/services/shop.service';
+import { IndustryService } from '../../core/services/industry.service';
 import { ProductService } from '../../core/services/product.service';
 import { TenantService } from '../../core/services/tenant.service';
 import { Shop } from '../../core/models/shop.model';
+import { Industry } from '../../core/models/industry.model';
 import { PopularProductsResponse } from '../../core/models/product.model';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { SearchBarComponent } from '../../shared/components/search-bar/search-bar.component';
@@ -50,52 +52,118 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
             </div>
           </div>
 
+          <!-- Industry Filter -->
+          @if (industries().length > 0) {
+            <div class="industry-filter">
+              <button
+                type="button"
+                [class.active]="selectedIndustryId() === null"
+                (click)="filterByIndustry(null)"
+                class="industry-chip"
+              >
+                All Industries
+              </button>
+              @for (industry of industries(); track industry.id) {
+                <button
+                  type="button"
+                  [class.active]="selectedIndustryId() === industry.id"
+                  (click)="filterByIndustry(industry.id)"
+                  class="industry-chip"
+                >
+                  @if (industry.iconUrl) {
+                    <img [src]="industry.iconUrl" [alt]="industry.name" class="industry-icon" />
+                  }
+                  {{ industry.name }}
+                </button>
+              }
+            </div>
+          }
+
           @if (loading()) {
             <app-loading-spinner></app-loading-spinner>
           } @else {
-            <!-- Alphabet Navigation -->
-            <div class="alphabet-nav">
-              @for (letter of alphabet(); track letter) {
-                <a [href]="'#section-' + letter" class="alphabet-link">{{ letter }}</a>
-              }
-            </div>
-
-            <!-- Shops by Letter -->
-            @for (group of shopsByLetter(); track group.letter) {
-              <section [id]="'section-' + group.letter" class="letter-section">
-                <div class="letter-header">
-                  <span class="letter">{{ group.letter }}</span>
-                  <div class="divider"></div>
-                  <span class="shop-count-small">{{ group.shops.length }} shops</span>
-                </div>
-                <div class="shops-grid">
-                  @for (shop of group.shops; track shop.id) {
-                    <a [routerLink]="['/shops', shop.slug]" class="shop-card">
-                      <div class="shop-card-content">
-                        <div class="shop-logo">
-                          @if (shop.logoUrl) {
-                            <img [src]="shop.logoUrl" [alt]="shop.name" />
-                          } @else {
-                            <span class="shop-initial">{{ shop.name.charAt(0).toUpperCase() }}</span>
-                          }
-                        </div>
-                        <div class="shop-info">
-                          <h3 class="shop-name">
-                            {{ shop.name }}
-                            @if (shop.isVerified) {
-                              <span class="verified-badge">✓ Verified</span>
+            <!-- Shops by Industry -->
+            @if (selectedIndustryId() === null) {
+              <!-- Show all shops grouped by industry -->
+              @for (group of shopsByIndustry(); track group.industryId) {
+                <section [id]="'industry-' + group.industryId" class="industry-section">
+                  <div class="industry-header">
+                    @if (group.industry) {
+                      <div class="industry-title-section">
+                        @if (group.industry.iconUrl) {
+                          <img [src]="group.industry.iconUrl" [alt]="group.industry.name" class="industry-header-icon" />
+                        }
+                        <h3 class="industry-title">{{ group.industry.name }}</h3>
+                      </div>
+                    } @else {
+                      <h3 class="industry-title">Other Shops</h3>
+                    }
+                    <div class="divider"></div>
+                    <span class="shop-count-small">{{ group.shops.length }} {{ group.shops.length === 1 ? 'shop' : 'shops' }}</span>
+                  </div>
+                  <div class="shops-grid">
+                    @for (shop of group.shops; track shop.id) {
+                      <a [routerLink]="['/shops', shop.slug]" class="shop-card">
+                        <div class="shop-card-content">
+                          <div class="shop-logo">
+                            @if (shop.logoUrl) {
+                              <img [src]="shop.logoUrl" [alt]="shop.name" />
+                            } @else {
+                              <span class="shop-initial">{{ shop.name.charAt(0).toUpperCase() }}</span>
                             }
-                          </h3>
-                          <div class="shop-address">
-                            <span class="address-icon">📍</span>
-                            <span>{{ shop.address }}</span>
+                          </div>
+                          <div class="shop-info">
+                            <h3 class="shop-name">
+                              {{ shop.name }}
+                              @if (shop.isVerified) {
+                                <span class="verified-badge">✓ Verified</span>
+                              }
+                            </h3>
+                            <div class="shop-address">
+                              <span class="address-icon">📍</span>
+                              <span>{{ shop.address }}</span>
+                            </div>
                           </div>
                         </div>
+                      </a>
+                    }
+                  </div>
+                </section>
+              }
+            } @else {
+              <!-- Show filtered shops for selected industry -->
+              <div class="shops-grid">
+                @for (shop of shops(); track shop.id) {
+                  <a [routerLink]="['/shops', shop.slug]" class="shop-card">
+                    <div class="shop-card-content">
+                      <div class="shop-logo">
+                        @if (shop.logoUrl) {
+                          <img [src]="shop.logoUrl" [alt]="shop.name" />
+                        } @else {
+                          <span class="shop-initial">{{ shop.name.charAt(0).toUpperCase() }}</span>
+                        }
                       </div>
-                    </a>
-                  }
+                      <div class="shop-info">
+                        <h3 class="shop-name">
+                          {{ shop.name }}
+                          @if (shop.isVerified) {
+                            <span class="verified-badge">✓ Verified</span>
+                          }
+                        </h3>
+                        <div class="shop-address">
+                          <span class="address-icon">📍</span>
+                          <span>{{ shop.address }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                }
+              </div>
+              @if (shops().length === 0) {
+                <div class="no-shops-message">
+                  <p>No shops found in this industry.</p>
                 </div>
-              </section>
+              }
             }
           }
         </div>
@@ -221,35 +289,10 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       border: 1px solid var(--border-color);
       white-space: nowrap;
     }
-    .alphabet-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 2.5rem;
-      padding: 1.25rem;
-      background: var(--bg-primary);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-    }
-    .alphabet-link {
-      text-decoration: none;
-      color: var(--text-secondary);
-      font-weight: 600;
-      padding: 0.5rem 0.75rem;
-      border-radius: var(--radius-md);
-      transition: all 0.2s ease;
-      font-size: 0.875rem;
-    }
-    .alphabet-link:hover {
-      color: var(--primary-color);
-      background: var(--bg-tertiary);
-      transform: translateY(-1px);
-    }
-    .letter-section {
+    .industry-section {
       margin-bottom: 4rem;
     }
-    .letter-header {
+    .industry-header {
       display: flex;
       align-items: center;
       gap: 1.25rem;
@@ -260,12 +303,22 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       padding: 1.25rem 0;
       z-index: 10;
     }
-    .letter {
-      font-size: 3rem;
-      font-weight: 800;
+    .industry-title-section {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .industry-header-icon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .industry-title {
+      font-size: 1.75rem;
+      font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: -0.03em;
-      line-height: 1;
+      margin: 0;
+      letter-spacing: -0.02em;
     }
     .divider {
       flex: 1;
@@ -363,6 +416,66 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       font-size: 0.875rem;
       flex-shrink: 0;
     }
+    .industry-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--bg-primary);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+    .industry-chip {
+      padding: 0.625rem 1.25rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .industry-chip:hover {
+      background: var(--bg-tertiary);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+    .industry-chip.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+    .industry-icon {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+    .shop-industry {
+      margin-bottom: 0.5rem;
+    }
+    .industry-badge {
+      display: inline-block;
+      padding: 0.25rem 0.625rem;
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .no-shops-message {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-secondary);
+    }
+    .no-shops-message p {
+      font-size: 1.125rem;
+      margin: 0;
+    }
     @media (max-width: 768px) {
       .hero-section {
         padding: 3rem 0 2.5rem;
@@ -381,8 +494,8 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       .section-title {
         font-size: 1.75rem;
       }
-      .letter {
-        font-size: 2.25rem;
+      .industry-title {
+        font-size: 1.5rem;
       }
       .container {
         padding: 0 1rem;
@@ -392,37 +505,57 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
 })
 export class HomeComponent implements OnInit {
   shops = signal<Shop[]>([]);
+  allShops = signal<Shop[]>([]);
   shopCount = signal<number>(0);
   popularSearches = signal<string[]>([]);
   loading = signal<boolean>(true);
+  industries = signal<Industry[]>([]);
+  selectedIndustryId = signal<string | null>(null);
   cityName = this.tenantService.getCityNameSignal();
 
-  alphabet = signal<string[]>('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''));
-
-  shopsByLetter = computed(() => {
-    const grouped: { letter: string; shops: Shop[] }[] = [];
+  shopsByIndustry = computed(() => {
+    const grouped: { industryId: string; industry: Industry | null; shops: Shop[] }[] = [];
     const shopsMap = new Map<string, Shop[]>();
+    const industryMap = new Map<string, Industry>();
 
+    // Create industry map for quick lookup
+    this.industries().forEach(industry => {
+      industryMap.set(industry.id, industry);
+    });
+
+    // Group shops by industry
     this.shops().forEach(shop => {
-      const firstLetter = shop.name.charAt(0).toUpperCase();
-      if (!shopsMap.has(firstLetter)) {
-        shopsMap.set(firstLetter, []);
+      const industryId = shop.industryId || 'other';
+      if (!shopsMap.has(industryId)) {
+        shopsMap.set(industryId, []);
       }
-      shopsMap.get(firstLetter)!.push(shop);
+      shopsMap.get(industryId)!.push(shop);
     });
 
-    this.alphabet().forEach(letter => {
-      const shops = shopsMap.get(letter) || [];
-      if (shops.length > 0) {
-        grouped.push({ letter, shops });
-      }
+    // Create groups with industry info
+    shopsMap.forEach((shops, industryId) => {
+      const industry = industryId === 'other' ? null : industryMap.get(industryId) || null;
+      grouped.push({
+        industryId,
+        industry,
+        shops: shops.sort((a, b) => a.name.localeCompare(b.name))
+      });
     });
 
-    return grouped;
+    // Sort groups: industries first (by name), then "other" at the end
+    return grouped.sort((a, b) => {
+      if (a.industryId === 'other') return 1;
+      if (b.industryId === 'other') return -1;
+      if (a.industry && b.industry) {
+        return a.industry.name.localeCompare(b.industry.name);
+      }
+      return 0;
+    });
   });
 
   constructor(
     private shopService: ShopService,
+    private industryService: IndustryService,
     private productService: ProductService,
     private tenantService: TenantService
   ) {}
@@ -434,9 +567,18 @@ export class HomeComponent implements OnInit {
   loadData(): void {
     this.loading.set(true);
 
+    // Load industries
+    this.industryService.getIndustries().subscribe({
+      next: (industries) => {
+        this.industries.set(industries);
+      },
+      error: (error) => console.error('Error loading industries:', error)
+    });
+
     // Load shops
     this.shopService.getShops().subscribe({
       next: (shops) => {
+        this.allShops.set(shops);
         this.shops.set(shops);
         this.loading.set(false);
       },
@@ -459,5 +601,25 @@ export class HomeComponent implements OnInit {
       },
       error: (error) => console.error('Error loading popular products:', error)
     });
+  }
+
+  filterByIndustry(industryId: string | null): void {
+    this.selectedIndustryId.set(industryId);
+    
+    if (industryId === null) {
+      this.shops.set(this.allShops());
+    } else {
+      this.loading.set(true);
+      this.shopService.getShopsByIndustry(industryId).subscribe({
+        next: (shops) => {
+          this.shops.set(shops);
+          this.loading.set(false);
+        },
+        error: (error) => {
+          console.error('Error loading shops by industry:', error);
+          this.loading.set(false);
+        }
+      });
+    }
   }
 }

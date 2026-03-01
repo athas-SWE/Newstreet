@@ -17,6 +17,10 @@ public class AdminShopDto
     public string CityName { get; set; } = string.Empty;
     public string CitySlug { get; set; } = string.Empty;
 
+    public Guid? IndustryId { get; set; }
+    public string? IndustryName { get; set; }
+    public string? IndustrySlug { get; set; }
+
     public Guid? OwnerId { get; set; }
     public string? OwnerEmail { get; set; }
 

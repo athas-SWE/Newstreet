@@ -17,7 +17,18 @@ public class ShopRepository : IShopRepository
     {
         return await _context.Shops
             .Include(s => s.City)
+            .Include(s => s.Industry)
             .Where(s => s.CityId == cityId && s.Status == "active")
+            .OrderBy(s => s.Name)
+            .ToListAsync();
+    }
+
+    public async Task<List<Shop>> GetShopsByIndustryIdAsync(Guid industryId, Guid cityId)
+    {
+        return await _context.Shops
+            .Include(s => s.City)
+            .Include(s => s.Industry)
+            .Where(s => s.IndustryId == industryId && s.CityId == cityId && s.Status == "active")
             .OrderBy(s => s.Name)
             .ToListAsync();
     }
@@ -26,6 +37,7 @@ public class ShopRepository : IShopRepository
     {
         return await _context.Shops
             .Include(s => s.City)
+            .Include(s => s.Industry)
             .Include(s => s.Products)
             .FirstOrDefaultAsync(s => s.Slug == slug && s.CityId == cityId);
     }
@@ -34,6 +46,7 @@ public class ShopRepository : IShopRepository
     {
         return await _context.Shops
             .Include(s => s.City)
+            .Include(s => s.Industry)
             .Include(s => s.Products)
             .FirstOrDefaultAsync(s => s.Id == id);
     }

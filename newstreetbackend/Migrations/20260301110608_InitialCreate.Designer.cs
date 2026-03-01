@@ -12,7 +12,7 @@ using newstreetbackend.Dbcontext;
 namespace newstreetbackend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260219132930_InitialCreate")]
+    [Migration("20260301110608_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -52,6 +52,46 @@ namespace newstreetbackend.Migrations
                     b.ToTable("Cities");
                 });
 
+            modelBuilder.Entity("newstreetbackend.Entities.Industry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("IconUrl")
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Industries");
+                });
+
             modelBuilder.Entity("newstreetbackend.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -65,7 +105,10 @@ namespace newstreetbackend.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("varchar(1000)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("ImageUrl1")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl2")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
@@ -95,6 +138,37 @@ namespace newstreetbackend.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("newstreetbackend.Entities.ProductInterest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("UserEmail")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("UserPhone")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInterests");
+                });
+
             modelBuilder.Entity("newstreetbackend.Entities.Shop", b =>
                 {
                     b.Property<Guid>("Id")
@@ -112,14 +186,23 @@ namespace newstreetbackend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<Guid?>("IndustryId")
+                        .HasColumnType("char(36)");
+
                     b.Property<bool>("IsDeliveryAvailable")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("double");
+
                     b.Property<string>("LogoUrl")
                         .HasColumnType("longtext");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("double");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -155,6 +238,8 @@ namespace newstreetbackend.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
+
+                    b.HasIndex("IndustryId");
 
                     b.HasIndex("OwnerId")
                         .IsUnique();
@@ -242,6 +327,17 @@ namespace newstreetbackend.Migrations
                     b.Navigation("Shop");
                 });
 
+            modelBuilder.Entity("newstreetbackend.Entities.ProductInterest", b =>
+                {
+                    b.HasOne("newstreetbackend.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("newstreetbackend.Entities.Shop", b =>
                 {
                     b.HasOne("newstreetbackend.Entities.City", "City")
@@ -250,12 +346,19 @@ namespace newstreetbackend.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("newstreetbackend.Entities.Industry", "Industry")
+                        .WithMany("Shops")
+                        .HasForeignKey("IndustryId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("newstreetbackend.Entities.User", "Owner")
                         .WithOne("OwnedShop")
                         .HasForeignKey("newstreetbackend.Entities.Shop", "OwnerId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("City");
+
+                    b.Navigation("Industry");
 
                     b.Navigation("Owner");
                 });
@@ -276,6 +379,11 @@ namespace newstreetbackend.Migrations
                     b.Navigation("Shops");
 
                     b.Navigation("Tenants");
+                });
+
+            modelBuilder.Entity("newstreetbackend.Entities.Industry", b =>
+                {
+                    b.Navigation("Shops");
                 });
 
             modelBuilder.Entity("newstreetbackend.Entities.Shop", b =>

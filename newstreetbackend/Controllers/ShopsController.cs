@@ -62,6 +62,19 @@ public class ShopsController : ControllerBase
         return Ok(count);
     }
 
+    [HttpGet("industry/{industryId}")]
+    public async Task<ActionResult<List<ShopDto>>> GetShopsByIndustry(Guid industryId)
+    {
+        var cityId = TenantMiddleware.GetCityId(HttpContext);
+        if (!cityId.HasValue)
+        {
+            return BadRequest("Invalid subdomain or city not found");
+        }
+
+        var shops = await _shopService.GetShopsByIndustryIdAsync(industryId, cityId.Value);
+        return Ok(shops);
+    }
+
     [HttpGet("{slug}/products")]
     public async Task<ActionResult<List<Model.ProductDto>>> GetShopProducts(string slug)
     {

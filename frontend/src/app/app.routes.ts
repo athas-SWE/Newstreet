@@ -79,6 +79,10 @@ export const routes: Routes = [
           {
             path: 'cities',
             loadComponent: () => import('./features/admin/city-management/city-management.component').then(m => m.CityManagementComponent)
+          },
+          {
+            path: 'industries',
+            loadComponent: () => import('./features/admin/industry-management/industry-management.component').then(m => m.IndustryManagementComponent)
           }
         ]
       }

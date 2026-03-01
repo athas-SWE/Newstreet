@@ -1,9 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { IndustryService } from '../../../core/services/industry.service';
 import { LocationPickerComponent } from '../../../shared/components/location-picker/location-picker.component';
+import { Industry } from '../../../core/models/industry.model';
 
 @Component({
   selector: 'app-shop-owner-register',
@@ -110,6 +112,21 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
                   [(ngModel)]="formData.whatsApp"
                   class="form-input"
                 />
+              </div>
+              <div class="form-group">
+                <label for="industryId">Industry (Optional)</label>
+                <select
+                  id="industryId"
+                  name="industryId"
+                  [(ngModel)]="formData.industryId"
+                  class="form-input"
+                >
+                  <option [value]="undefined">Select an industry</option>
+                  @for (industry of industries(); track industry.id) {
+                    <option [value]="industry.id">{{ industry.name }}</option>
+                  }
+                </select>
+                <small class="form-hint">Choose the industry category for your shop</small>
               </div>
               @if (error()) {
                 <div class="error-message">{{ error() }}</div>
@@ -281,13 +298,21 @@ import { LocationPickerComponent } from '../../../shared/components/location-pic
       opacity: 0.5;
       cursor: not-allowed;
     }
+    .form-hint {
+      display: block;
+      margin-top: 0.25rem;
+      color: #666;
+      font-size: 0.875rem;
+    }
   `]
 })
-export class ShopOwnerRegisterComponent {
+export class ShopOwnerRegisterComponent implements OnInit {
   currentStep = signal<number>(1);
   loading = signal<boolean>(false);
   error = signal<string>('');
   confirmPassword = '';
+  industries = signal<Industry[]>([]);
+  loadingIndustries = signal<boolean>(false);
 
   formData = {
     email: '',
@@ -298,13 +323,33 @@ export class ShopOwnerRegisterComponent {
     phone: '',
     whatsApp: '',
     latitude: undefined as number | undefined,
-    longitude: undefined as number | undefined
+    longitude: undefined as number | undefined,
+    industryId: undefined as string | undefined
   };
 
   constructor(
     private authService: AuthService,
+    private industryService: IndustryService,
     private router: Router
   ) {}
+
+  ngOnInit(): void {
+    this.loadIndustries();
+  }
+
+  loadIndustries(): void {
+    this.loadingIndustries.set(true);
+    this.industryService.getIndustries().subscribe({
+      next: (industries) => {
+        this.industries.set(industries);
+        this.loadingIndustries.set(false);
+      },
+      error: (error) => {
+        console.error('Error loading industries:', error);
+        this.loadingIndustries.set(false);
+      }
+    });
+  }
 
   nextStep(): void {
     if (this.currentStep() === 1) {

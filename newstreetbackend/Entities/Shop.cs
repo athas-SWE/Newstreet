@@ -12,6 +12,7 @@ public class Shop
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
     public Guid CityId { get; set; }
+    public Guid? IndustryId { get; set; }
     public bool IsVerified { get; set; } = false;
     public bool IsDeliveryAvailable { get; set; } = false;
     public string Status { get; set; } = "active"; // active, inactive, suspended
@@ -21,6 +22,7 @@ public class Shop
     
     // Navigation properties
     public City City { get; set; } = null!;
+    public Industry? Industry { get; set; }
     public User? Owner { get; set; }
     public ICollection<Product> Products { get; set; } = new List<Product>();
 }
