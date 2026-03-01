@@ -39,14 +39,18 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   `,
   styles: [`
     .header {
-      background: var(--bg-primary);
-      box-shadow: var(--shadow-sm);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
       border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 100;
-      backdrop-filter: blur(10px);
-      background: rgba(255, 255, 255, 0.95);
+      transition: all var(--transition-base);
+    }
+    .header:hover {
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     }
     .container {
       max-width: 1280px;
@@ -57,7 +61,7 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 0;
+      padding: 1.125rem 0;
       gap: 2rem;
     }
     .logo {
@@ -65,21 +69,26 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
       color: var(--text-primary);
       display: flex;
       align-items: center;
+      transition: transform var(--transition-base);
+    }
+    .logo:hover {
+      transform: scale(1.02);
     }
     .logo h1 {
       margin: 0;
-      font-size: 1.75rem;
-      font-weight: 700;
+      font-size: 1.875rem;
+      font-weight: 800;
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      position: relative;
     }
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.75rem;
       flex: 1;
       justify-content: flex-end;
     }
@@ -93,24 +102,51 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
       color: var(--text-secondary);
       font-size: 0.9375rem;
       font-weight: 500;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-md);
-      transition: all 0.2s ease;
+      padding: 0.625rem 1.125rem;
+      border-radius: var(--radius-lg);
+      transition: all var(--transition-base);
+      position: relative;
+    }
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0.375rem;
+      left: 1.125rem;
+      right: 1.125rem;
+      height: 2px;
+      background: var(--primary-color);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
+      border-radius: var(--radius-full);
     }
     .nav-link:hover {
       color: var(--primary-color);
       background: var(--bg-tertiary);
     }
+    .nav-link:hover::before {
+      transform: scaleX(1);
+    }
     .nav-link.button {
-      background: none;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+      color: white;
       border: none;
       cursor: pointer;
-      padding: 0.5rem 1rem;
+      padding: 0.625rem 1.25rem;
       font-size: 0.9375rem;
-      font-weight: 500;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+    }
+    .nav-link.button::before {
+      display: none;
     }
     .nav-link.button:hover {
-      background: var(--bg-tertiary);
+      background: linear-gradient(135deg, var(--primary-hover) 0%, var(--accent-hover) 100%);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    .nav-link.button:active {
+      transform: translateY(0);
     }
     @media (max-width: 768px) {
       .container {
@@ -119,13 +155,23 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
       .header-content {
         flex-wrap: wrap;
         gap: 1rem;
+        padding: 1rem 0;
+      }
+      .logo h1 {
+        font-size: 1.625rem;
       }
       .header-actions {
         width: 100%;
         justify-content: space-between;
+        gap: 1rem;
       }
       .nav {
         flex-wrap: wrap;
+        gap: 0.375rem;
+      }
+      .nav-link {
+        padding: 0.5rem 0.875rem;
+        font-size: 0.875rem;
       }
     }
   `]

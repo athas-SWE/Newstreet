@@ -7,7 +7,10 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="loading-spinner">
-      <div class="spinner"></div>
+      <div class="spinner-container">
+        <div class="spinner"></div>
+        <div class="spinner-ring"></div>
+      </div>
     </div>
   `,
   styles: [`
@@ -15,15 +18,37 @@ import { CommonModule } from '@angular/common';
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 3rem 2rem;
+      min-height: 200px;
+    }
+    .spinner-container {
+      position: relative;
+      width: 48px;
+      height: 48px;
     }
     .spinner {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--bg-tertiary);
+      border-top: 4px solid var(--primary-color);
+      border-right: 4px solid var(--accent-color);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+      animation: spin 0.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .spinner-ring {
+      width: 48px;
+      height: 48px;
+      border: 4px solid transparent;
+      border-top: 4px solid var(--accent-color);
+      border-radius: 50%;
+      animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite reverse;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.6;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }

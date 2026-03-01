@@ -182,7 +182,7 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
     .hero-section {
       background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       color: white;
-      padding: 5rem 0 4rem;
+      padding: 6rem 0 5rem;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -195,39 +195,69 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       right: 0;
       bottom: 0;
       background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      opacity: 0.3;
+      opacity: 0.4;
+      animation: patternMove 20s linear infinite;
+    }
+    @keyframes patternMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(60px, 60px); }
+    }
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: float 15s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-20px, -20px) scale(1.1); }
     }
     .hero-title {
-      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
       line-height: 1.1;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       position: relative;
       z-index: 1;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     }
     .city-name {
       text-transform: capitalize;
       display: inline-block;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
     }
     .hero-subtitle {
       font-style: italic;
       font-weight: 400;
       opacity: 0.95;
-      font-size: clamp(1.25rem, 2vw, 1.5rem);
+      font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+      font-weight: 300;
+      letter-spacing: 0.01em;
     }
     .hero-description {
       font-size: 1.125rem;
-      margin-bottom: 2.5rem;
-      opacity: 0.9;
-      max-width: 600px;
+      margin-bottom: 3rem;
+      opacity: 0.95;
+      max-width: 650px;
       margin-left: auto;
       margin-right: auto;
       position: relative;
       z-index: 1;
+      line-height: 1.7;
+      font-weight: 400;
     }
     .search-section {
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto;
       position: relative;
       z-index: 1;
@@ -235,107 +265,134 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
     .popular-searches {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.625rem;
+      gap: 0.75rem;
       justify-content: center;
-      margin-top: 1.5rem;
+      margin-top: 2rem;
     }
     .search-chip {
-      padding: 0.5rem 1rem;
+      padding: 0.625rem 1.25rem;
       background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 2rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-full);
       color: white;
       text-decoration: none;
       font-size: 0.875rem;
       font-weight: 500;
-      transition: all 0.2s ease;
+      transition: all var(--transition-base);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     .search-chip:hover {
       background: rgba(255, 255, 255, 0.25);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .search-chip:active {
+      transform: translateY(-1px) scale(1);
     }
     .shops-section {
-      padding: 4rem 0;
+      padding: 5rem 0;
       background: var(--bg-secondary);
+      position: relative;
     }
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
       gap: 1.5rem;
     }
     .section-title {
-      font-size: 2.25rem;
+      font-size: clamp(1.875rem, 4vw, 2.5rem);
       font-weight: 700;
-      margin: 0 0 0.5rem;
+      margin: 0 0 0.75rem;
       color: var(--text-primary);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
     }
     .section-subtitle {
       color: var(--text-secondary);
       margin: 0;
-      font-size: 1rem;
+      font-size: 1.0625rem;
+      font-weight: 400;
+      line-height: 1.5;
     }
     .shop-count {
       background: var(--bg-primary);
-      padding: 0.625rem 1.25rem;
+      padding: 0.75rem 1.5rem;
       border-radius: var(--radius-lg);
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text-secondary);
       border: 1px solid var(--border-color);
       white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: all var(--transition-base);
+    }
+    .shop-count:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
     }
     .industry-section {
-      margin-bottom: 4rem;
+      margin-bottom: 5rem;
     }
     .industry-header {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
-      margin-bottom: 1.75rem;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
       position: sticky;
       top: 80px;
       background: var(--bg-secondary);
-      padding: 1.25rem 0;
+      padding: 1.5rem 0;
       z-index: 10;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
     .industry-title-section {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
     }
     .industry-header-icon {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
     .industry-title {
-      font-size: 1.75rem;
+      font-size: clamp(1.5rem, 3vw, 2rem);
       font-weight: 700;
       color: var(--text-primary);
       margin: 0;
       letter-spacing: -0.02em;
+      line-height: 1.2;
     }
     .divider {
       flex: 1;
       height: 2px;
       background: linear-gradient(90deg, var(--border-color) 0%, transparent 100%);
+      border-radius: var(--radius-full);
     }
     .shop-count-small {
       font-size: 0.75rem;
       font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      padding: 0.375rem 0.75rem;
+      background: var(--bg-primary);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
     }
     .shops-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
+      gap: 1.75rem;
     }
     .shop-card {
       text-decoration: none;
@@ -343,32 +400,56 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       background: var(--bg-primary);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-xl);
-      padding: 1.5rem;
-      transition: all 0.2s ease;
+      padding: 1.75rem;
+      transition: all var(--transition-base);
       display: block;
       box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+    .shop-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition-base);
     }
     .shop-card:hover {
       border-color: var(--primary-color);
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-6px);
+    }
+    .shop-card:hover::before {
+      transform: scaleX(1);
     }
     .shop-card-content {
       display: flex;
-      gap: 1.25rem;
+      gap: 1.5rem;
       align-items: flex-start;
     }
     .shop-logo {
-      width: 72px;
-      height: 72px;
-      border-radius: var(--radius-lg);
-      background: var(--bg-tertiary);
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       overflow: hidden;
-      border: 1px solid var(--border-color);
+      border: 2px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--transition-base);
+    }
+    .shop-card:hover .shop-logo {
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-md);
+      transform: scale(1.05);
     }
     .shop-logo img {
       width: 100%;
@@ -376,84 +457,110 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
       object-fit: cover;
     }
     .shop-initial {
-      font-size: 1.75rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: var(--text-secondary);
+      color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .shop-info {
       flex: 1;
       min-width: 0;
     }
     .shop-name {
-      font-size: 1.125rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      margin: 0 0 0.625rem;
+      margin: 0 0 0.75rem;
       display: flex;
       align-items: center;
-      gap: 0.625rem;
+      gap: 0.75rem;
       flex-wrap: wrap;
       color: var(--text-primary);
+      line-height: 1.3;
     }
     .verified-badge {
-      background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+      background: linear-gradient(135deg, var(--success-color) 0%, var(--success-hover) 100%);
       color: white;
       font-size: 0.6875rem;
-      padding: 0.25rem 0.625rem;
-      border-radius: 1rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: var(--radius-full);
       font-weight: 600;
       white-space: nowrap;
       box-shadow: var(--shadow-sm);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
     .shop-address {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      align-items: flex-start;
+      gap: 0.625rem;
       color: var(--text-secondary);
-      font-size: 0.875rem;
-      line-height: 1.5;
+      font-size: 0.9375rem;
+      line-height: 1.6;
     }
     .address-icon {
-      font-size: 0.875rem;
+      font-size: 1rem;
       flex-shrink: 0;
+      margin-top: 0.125rem;
+      opacity: 0.7;
     }
     .industry-filter {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-      padding: 1rem;
+      gap: 0.875rem;
+      margin-bottom: 2.5rem;
+      padding: 1.25rem;
       background: var(--bg-primary);
-      border-radius: var(--radius-lg);
+      border-radius: var(--radius-xl);
       border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
     }
     .industry-chip {
-      padding: 0.625rem 1.25rem;
+      padding: 0.75rem 1.5rem;
       background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
       color: var(--text-secondary);
       font-size: 0.875rem;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all var(--transition-base);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.625rem;
+      box-shadow: var(--shadow-xs);
     }
     .industry-chip:hover {
       background: var(--bg-tertiary);
       border-color: var(--primary-color);
       color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
     .industry-chip.active {
-      background: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
       border-color: var(--primary-color);
       color: white;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .industry-chip.active:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
     }
     .industry-icon {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       object-fit: contain;
+      filter: brightness(0) saturate(100%);
+      transition: filter var(--transition-base);
+    }
+    .industry-chip.active .industry-icon {
+      filter: brightness(0) invert(1);
     }
     .shop-industry {
       margin-bottom: 0.5rem;
@@ -469,36 +576,67 @@ import { SearchBarComponent } from '../../shared/components/search-bar/search-ba
     }
     .no-shops-message {
       text-align: center;
-      padding: 3rem;
+      padding: 4rem 2rem;
       color: var(--text-secondary);
+      background: var(--bg-primary);
+      border-radius: var(--radius-xl);
+      border: 1px dashed var(--border-color);
     }
     .no-shops-message p {
       font-size: 1.125rem;
       margin: 0;
+      font-weight: 500;
     }
     @media (max-width: 768px) {
       .hero-section {
-        padding: 3rem 0 2.5rem;
+        padding: 4rem 0 3rem;
+      }
+      .hero-title {
+        margin-bottom: 1rem;
+      }
+      .hero-description {
+        margin-bottom: 2rem;
+        font-size: 1rem;
       }
       .shops-section {
-        padding: 2.5rem 0;
+        padding: 3rem 0;
       }
       .shops-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
       }
       .section-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 1.25rem;
+        margin-bottom: 2rem;
       }
       .section-title {
-        font-size: 1.75rem;
+        font-size: 1.875rem;
       }
       .industry-title {
         font-size: 1.5rem;
       }
+      .industry-header {
+        padding: 1rem 0;
+      }
       .container {
         padding: 0 1rem;
+      }
+      .shop-card {
+        padding: 1.5rem;
+      }
+      .shop-logo {
+        width: 64px;
+        height: 64px;
+      }
+      .industry-filter {
+        padding: 1rem;
+        gap: 0.625rem;
+      }
+      .industry-chip {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.8125rem;
       }
     }
   `]
